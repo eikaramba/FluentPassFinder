@@ -28,18 +28,19 @@ namespace FluentPassFinder.Views
         }
 
         [RelayCommand]
-        public void HideSearchWindow()
+        public void HideSearchWindow(bool clearInput=false)
         {
             if (!isClosing && !isOpening)
             {
                 isClosing = true;
                 Hide();
+                if(clearInput){
+                    ViewModel.SearchText = string.Empty;
+                    ViewModel.Entries.Clear();
 
-                ViewModel.SearchText = string.Empty;
-                ViewModel.Entries.Clear();
-
-                ViewModel.IsContextMenuOpen = false;
-                ViewModel.SelectedEntry = null;
+                    ViewModel.IsContextMenuOpen = false;
+                    ViewModel.SelectedEntry = null;
+                }
 
                 isClosing = false;
             }

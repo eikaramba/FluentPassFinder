@@ -5,6 +5,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <UseWPF>true</UseWPF>
 	<OutDir>$(SolutionDir)Build/$(Configuration)/$(TargetFramework)/bin</OutDir>
+	<TargetFramework>net48</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>

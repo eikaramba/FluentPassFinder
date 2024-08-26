@@ -34,7 +34,7 @@
     </ui:FluentWindow.Resources>
     <ui:FluentWindow.InputBindings>
         <KeyBinding Gesture="Escape"
-                    Command="{Binding HideSearchWindowCommand}" />
+                    Command="{Binding HideSearchWindowCommand}" CommandParameter="{StaticResource True}" />
         <KeyBinding Gesture="Enter"
                     Command="{Binding ViewModel.EnterActionCommand}"  />
         <KeyBinding Gesture="Shift+Enter"
