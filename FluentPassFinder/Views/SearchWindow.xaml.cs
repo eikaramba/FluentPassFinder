@@ -2,6 +2,7 @@
 using System.Windows;
 using System.Windows.Controls;
 using WpfScreenHelper;
+using System.Timers;
 
 namespace FluentPassFinder.Views
 {
@@ -28,23 +29,42 @@ namespace FluentPassFinder.Views
         }
 
         [RelayCommand]
-        public void HideSearchWindow(bool clearInput=false)
+        public void HideSearchWindow(bool clearInputDirectly=false)
         {
             if (!isClosing && !isOpening)
             {
                 isClosing = true;
                 Hide();
-                if(clearInput){
-                    ViewModel.SearchText = string.Empty;
-                    ViewModel.Entries.Clear();
-
-                    ViewModel.IsContextMenuOpen = false;
-                    ViewModel.SelectedEntry = null;
+                if(clearInputDirectly){
+                    ClearInputs();
+                }else{
+                    ClearInputsAfterDelay(TimeSpan.FromSeconds(30));
                 }
 
                 isClosing = false;
             }
         }
+        private void ClearInputsAfterDelay(TimeSpan delay)
+        {
+            var timer = new System.Threading.Timer(_ =>
+            {
+                Dispatcher.Invoke(() =>
+                {
+                    ClearInputs();
+                });
+            }, null, delay, Timeout.InfiniteTimeSpan);
+        }
+
+        private void ClearInputs()
+        {
+            ViewModel.SearchText = string.Empty;
+            ViewModel.Entries.Clear();
+
+            ViewModel.IsContextMenuOpen = false;
+            ViewModel.SelectedEntry = null;
+        }
+
+        
 
         public void ShowSearchWindow(bool showOnPrimaryScreen)
         {
